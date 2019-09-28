@@ -1,0 +1,2 @@
+number of cars: 5
+number of free spaces: 0
