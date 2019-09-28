@@ -22,11 +22,13 @@ ap.add_argument('-cl', '--classes', required=True,
                 help = 'path to text file containing class names')
 args = ap.parse_args()
 
-space_1_available = True
-space_2_available = True
-space_3_available = True
-space_4_available = True
-space_5_available = True
+#open output text file
+number_cars = open("./caroutput/number_cars.txt", "r+")
+
+
+space_available = [True, True, True, True, True]
+
+#this is the formatting for the specfic image and car parking space
 
 space_min_h = 2100 
 space_max_h = 2900
@@ -85,40 +87,37 @@ def available_space( img, x, y, x_plus_w, y_plus_h):
     if object_location_y > space_min_h and object_location_y < space_max_h:
     
         if object_location_x > space_1_min_x and object_location_x < space_1_max_x:
-            space_1_available = False
             space = "1"
             image_output(img, x, y, x_plus_w, y_plus_h, space)
-            print("is in space 1")
-            return space_1_available
+            space_available[0]= False
+            return space_available
             
         elif object_location_x > space_2_min_x and object_location_x < space_2_max_x:
-            space_2_available = False
             space = "2"
             image_output(img, x, y, x_plus_w, y_plus_h, space)
-            print("is in space 2")
-            return space_2_available
+            space_available[1]= False
+            return space_available
             
         elif object_location_x > space_3_min_x and object_location_x < space_3_max_x:
-            space_3_available = False 
             space = "3"
             image_output(img, x, y, x_plus_w, y_plus_h, space)
-            print("is in space 3")
-            return space_3_available
+            space_available[2]= False
+            return space_available
             
         elif object_location_x > space_4_min_x and object_location_x < space_4_max_x:
-            space_4_available = False   
+               
             space = "4"
             image_output(img, x, y, x_plus_w, y_plus_h, space)            
-            print("is in space 4")
-            return space_4_available
+            space_available[3]= False
+            return space_available
             
         elif object_location_x > space_5_min_x and object_location_x < space_5_max_x:
-            space_5_available = False  
             space = "5"
             image_output(img, x, y, x_plus_w, y_plus_h, space)
-            print("is in space 5")
-            return space_5_available
-            
+            space_available[4]= False
+            return space_available
+        
+        return space_available
     
 image = cv2.imread(args.image)
 
@@ -180,22 +179,24 @@ for i in indices:
     w = box[2]
     h = box[3]
     draw_prediction(image, class_ids[i], confidences[i], round(x), round(y), round(x+w), round(y+h))
-    available_space( image, round(x), round(y), round(x+w), round(y+h))
-
+    space_available = available_space( image, round(x), round(y), round(x+w), round(y+h))
+    
 no_parking = 5
 no_free = no_parking - car_counter
 
 cv2.imwrite("./caroutput/object-detection.jpg", image)
 
 #writing the informmation to a .txt file 
+#number of cars
+#number of free spaces
 number_cars = open("./caroutput/number_cars.txt", "r+")
 number_cars_string = "number of cars: " + str(car_counter)
 number_cars.write(number_cars_string)
 number_cars_string = "\nnumber of free spaces: " + str(no_free)
 number_cars.write(number_cars_string)
+number_cars.write(str(space_available))
 number_cars.close()
 
 print("Complete")
-
 
 cv2.destroyAllWindows()
