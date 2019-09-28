@@ -194,7 +194,7 @@ number_cars_string = "number of cars: " + str(car_counter)
 number_cars.write(number_cars_string)
 number_cars_string = "\nnumber of free spaces: " + str(no_free)
 number_cars.write(number_cars_string)
-number_cars.write(str(space_available))
+number_cars.write("\n"+str(space_available))
 number_cars.close()
 
 print("Complete")
