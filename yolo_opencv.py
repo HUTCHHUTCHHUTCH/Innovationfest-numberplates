@@ -23,7 +23,7 @@ ap.add_argument('-cl', '--classes', required=True,
 args = ap.parse_args()
 
 #open output text file
-number_cars = open("./caroutput/number_cars.txt", "r+")
+number_cars = open("./caroutput/number_cars.txt", "w")
 
 
 space_available = [True, True, True, True, True]
@@ -36,16 +36,16 @@ space_max_h = 2900
 space_1_min_x = 70
 space_1_max_x = 750
 
-space_4_min_x = 700
-space_4_max_x = 1300
+space_2_min_x = 751
+space_2_max_x = 1300
 
-space_2_min_x = 1450
-space_2_max_x = 2020
+space_3_min_x = 1301
+space_3_max_x = 2040
 
-space_3_min_x = 2040
-space_3_max_x = 2790
+space_4_min_x = 2041
+space_4_max_x = 2800
 
-space_5_min_x = 2800
+space_5_min_x = 2801
 space_5_max_x = 2900
 
 
